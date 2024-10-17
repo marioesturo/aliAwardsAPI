@@ -1,26 +1,28 @@
 package com.aliAwardsAPI.aliAwardsAPI.models;
 
-import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDateTime;
 
+@Entity
 public class Vote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "voter_id")
-    private User voter; // Usuario que vota
+    private User voter;
 
     @ManyToOne
-    @JoinColumn(name = "nominee_id")
-    private User nominee; // Usuario que recibe el voto
+    private User nominee;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category; // Categoría en la que se vota
+    private Category category;
 
     private LocalDateTime voteDate;
 

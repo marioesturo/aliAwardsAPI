@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VoteService {
@@ -18,23 +20,19 @@ public class VoteService {
     @Autowired
     private VoteRepository voteRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    public List<Vote> getAllVotes() {
+        return voteRepository.findAll();
+    }
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+    public Optional<Vote> getVoteById(Long id) {
+        return voteRepository.findById(id);
+    }
 
-    public Vote castVote(Long voterId, Long nomineeId, Long categoryId) {
-        User voter = userRepository.findById(voterId).orElseThrow(() -> new ResourceNotFoundException("Voter not found"));
-        User nominee = userRepository.findById(nomineeId).orElseThrow(() -> new ResourceNotFoundException("Nominee not found"));
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category not found"));
-
-        Vote vote = new Vote();
-        vote.setVoter(voter);
-        vote.setNominee(nominee);
-        vote.setCategory(category);
-        vote.setVoteDate(LocalDateTime.now());
-
+    public Vote createVote(Vote vote) {
         return voteRepository.save(vote);
+    }
+
+    public void deleteVote(Long id) {
+        voteRepository.deleteById(id);
     }
 }

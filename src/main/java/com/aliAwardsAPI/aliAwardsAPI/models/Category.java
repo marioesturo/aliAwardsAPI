@@ -1,12 +1,8 @@
 package com.aliAwardsAPI.aliAwardsAPI.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToMany;
-import org.springframework.data.annotation.Id;
-
+import jakarta.persistence.*;
 import java.util.List;
+
 
 @Entity
 public class Category {
@@ -15,7 +11,10 @@ public class Category {
     private Long id;
 
     private String name;
+
     private String description;
+
+    private String photo;
 
     @OneToMany(mappedBy = "category")
     private List<Vote> votes;
@@ -42,6 +41,14 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public List<Vote> getVotes() {
